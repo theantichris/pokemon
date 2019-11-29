@@ -39,7 +39,30 @@ class Pokemon:
             self.current_health = 1
         print("{} has been revived.".format(self.name))
 
-pokemon = Pokemon("Squirtle", "Water")
-print(pokemon)
-pokemon.lose_health(5)
-pokemon.gain_health(4)
+    def attack(self, other_pokemon):
+        if self.is_knocked_out:
+            print("{} is knocked out and cannot attack.".format(self.name))
+            return
+
+        if (self.type == "Fire" and other_pokemon.type == "Water") or (self.type == "Water" and other_pokemon.type == "Grass") or (self.type == "Grass" and other_pokemon.type == "Fire"):
+            damage = round(self.level * .05)
+            print("{} attacked {} for {} damage.".format(self.name, other_pokemon.name, damage))
+            print("It's not very effective.")
+        elif (self.type == "Fire" and other_pokemon.type == "Grass") or (self.type == "Water" and other_pokemon.type == "Fire") or (self.type == "Grass" and other_pokemon.type == "Water"):
+            damage = self.level * 2
+            print("{} attacked {} for {} damage.".format(self.name, other_pokemon.name, damage))
+            print("It's super effective!")
+        else:
+            damage = self.level
+            print("{} attacked {} for {} damage.".format(self.name, other_pokemon.name, damage))
+            
+        other_pokemon.lose_health(damage)
+
+pokemon1 = Pokemon("Squirtle", "Water")
+pokemon2 = Pokemon("Charmander", "Fire")
+
+print(pokemon1)
+print(pokemon2)
+
+pokemon1.attack(pokemon2)
+pokemon2.attack(pokemon1)
