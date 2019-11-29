@@ -85,6 +85,18 @@ class Trainer:
         self.pokemon_list[self.current_pokemon].gain_health(20)
         self.num_potions -= 1
 
+    def switch_active_pokemon(self, new_pokemon):
+        if new_pokemon >= 0 and new_pokemon < len(self.pokemon_list):
+            if self.pokemon_list[new_pokemon].is_knocked_out:
+                print("{} is knocked out.".format(self.pokemon_list[new_pokemon].name))
+            elif self.current_pokemon == new_pokemon:
+                print("{} is already {}'s active Pokemon.".format(self.pokemon_list[new_pokemon].name, self.name))
+            else:
+                self.current_pokemon = new_pokemon
+                print("{}, I choose you!".format(self.pokemon_list[self.current_pokemon].name))
+
+    def attack(self, other_trainer):
+        self.pokemon_list[self.current_pokemon].attack(other_trainer.pokemon_list[other_trainer.current_pokemon])
 
 squirtle = Pokemon("Squirtle", "Water")
 charmander = Pokemon("Charmander", "Fire")
