@@ -64,43 +64,36 @@ class Pokemon:
 
 
 class Trainer:
-    def __init__(self, name, pokemon_list, num_potions):
+    def __init__(self, name, pokemons, num_potions):
         self.name = name
-        self.pokemon_list = pokemon_list
+        self.pokemons = pokemons
         self.num_potions = num_potions
         self.current_pokemon = 0
 
     def __repr__(self):
         print("Trainer {} has the following Pokemon:".format(self.name))
-        for pokemon in self.pokemon_list:
+        for pokemon in self.pokemons:
             print(pokemon)
-        return "Their current active Pokemon is {}".format(self.pokemon_list[self.current_pokemon].name)
+        return "Their current active Pokemon is {}.".format(self.pokemons[self.current_pokemon].name)
 
     def use_potion(self):
         if self.num_potions <= 0:
             print("{} does not have any potions.".format(self.name))
             return
 
-        print("{} used a potion on {}.".format(self.name, self.pokemon_list[self.current_pokemon].name))
-        self.pokemon_list[self.current_pokemon].gain_health(20)
+        print("{} used a potion on {}.".format(self.name, self.pokemons[self.current_pokemon].name))
+        self.pokemons[self.current_pokemon].gain_health(20)
         self.num_potions -= 1
 
     def switch_active_pokemon(self, new_pokemon):
-        if new_pokemon >= 0 and new_pokemon < len(self.pokemon_list):
-            if self.pokemon_list[new_pokemon].is_knocked_out:
-                print("{} is knocked out.".format(self.pokemon_list[new_pokemon].name))
+        if new_pokemon >= 0 and new_pokemon < len(self.pokemons):
+            if self.pokemons[new_pokemon].is_knocked_out:
+                print("{} is knocked out.".format(self.pokemons[new_pokemon].name))
             elif self.current_pokemon == new_pokemon:
-                print("{} is already {}'s active Pokemon.".format(self.pokemon_list[new_pokemon].name, self.name))
+                print("{} is already {}'s active Pokemon.".format(self.pokemons[new_pokemon].name, self.name))
             else:
                 self.current_pokemon = new_pokemon
-                print("{}, I choose you!".format(self.pokemon_list[self.current_pokemon].name))
+                print("{}, I choose you!".format(self.pokemons[self.current_pokemon].name))
 
     def attack(self, other_trainer):
-        self.pokemon_list[self.current_pokemon].attack(other_trainer.pokemon_list[other_trainer.current_pokemon])
-
-squirtle = Pokemon("Squirtle", "Water")
-charmander = Pokemon("Charmander", "Fire")
-trainer = Trainer("Christopher", [squirtle, charmander], 1)
-
-trainer.use_potion()
-trainer.use_potion()
+        self.pokemons[self.current_pokemon].attack(other_trainer.pokemons[other_trainer.current_pokemon])
