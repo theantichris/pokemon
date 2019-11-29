@@ -55,14 +55,24 @@ class Pokemon:
         else:
             damage = self.level
             print("{} attacked {} for {} damage.".format(self.name, other_pokemon.name, damage))
-            
+
         other_pokemon.lose_health(damage)
 
-pokemon1 = Pokemon("Squirtle", "Water")
-pokemon2 = Pokemon("Charmander", "Fire")
+class Trainer:
+    def __init__(self, name, pokemon_list, num_potions):
+        self.name = name
+        self.pokemon_list = pokemon_list
+        self.num_potions = num_potions
+        self.current_pokemon = 0
 
-print(pokemon1)
-print(pokemon2)
+    def __repr__(self):
+        print("Trainer {} has the following Pokemon:".format(self.name))
+        for pokemon in self.pokemon_list:
+            print(pokemon)
+        return "Their current active Pokemon is {}".format(self.pokemon_list[self.current_pokemon].name)
 
-pokemon1.attack(pokemon2)
-pokemon2.attack(pokemon1)
+squirtle = Pokemon("Squirtle", "Water")
+charmander = Pokemon("Charmander", "Fire")
+christopher = Trainer("Christopher", [squirtle, charmander], 10)
+
+print(christopher)
