@@ -7,6 +7,9 @@ class Pokemon:
         self.current_health = self.max_health
         self.is_knocked_out = False
 
+    def __repr__(self):
+        return "{} is a level {} {} type Pokemon with {} max health.".format(self.name, self.level, self.type, self.max_health)
+
     def lose_health(self, health):
         print("{} took {} damage.".format(self.name, health))
         self.current_health -= health
@@ -36,6 +39,7 @@ class Pokemon:
             self.current_health = 1
         print("{} has been revived.".format(self.name))
 
-pokemon = Pokemon("Pikachu", "Electricity")
+pokemon = Pokemon("Squirtle", "Water")
+print(pokemon)
 pokemon.lose_health(5)
 pokemon.gain_health(4)
