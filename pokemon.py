@@ -1,32 +1,41 @@
 class Pokemon:
-    def __init__(self, name, type, max_health):
+    def __init__(self, name, type, level = 1):
         self.name = name
-        self.level = 1
         self.type = type
-        self.max_health = max_health
-        self.current_health = max_health
+        self.level = level
+        self.max_health = level * 5
+        self.current_health = self.max_health
         self.is_knocked_out = False
+
     def lose_health(self, health):
+        print("{} took {} damage.".format(self.name, health))
         self.current_health -= health
         if self.current_health <= 0:
             self.current_health = 0
-        print(self.name + " took " + str(health) + " damage and now has " + str(self.current_health) + " health.")
-        if self.current_health == 0:
             self.knock_out()
+        else:
+            print("{} now has {} health.".format(self.name, self.current_health))
+
     def gain_health(self, health):
+        print("{} healed {} damage.".format(self.name, health))
+        if self.current_health == 0:
+            self.revive()
+            health -= 1
         self.current_health += health
         if self.current_health > self.max_health:
             self.current_health = self.max_health
-        print (self.name + " healed for " + str(health) + " and now has " + str(self.current_health) + " health.")
+        print("{} now has {} health.".format(self.name, self.current_health))
+    
     def knock_out(self):
         self.is_knocked_out = True
-        print(self.name + " is knocked out.")
+        print("{} has been knocked out.".format(self.name))
+    
     def revive(self):
         self.is_knocked_out = False
-        print(self.name + " has been revived.")
-        self.gain_health(1)
+        if self.current_health <= 0:
+            self.current_health = 1
+        print("{} has been revived.".format(self.name))
 
-pokemon = Pokemon("Pikachu", "Electricity", 100)
-pokemon.lose_health(101)
-pokemon.revive()
-pokemon.gain_health(10)
+pokemon = Pokemon("Pikachu", "Electricity")
+pokemon.lose_health(5)
+pokemon.gain_health(4)
